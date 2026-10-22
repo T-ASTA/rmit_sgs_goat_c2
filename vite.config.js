@@ -7,5 +7,8 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5137,
     strictPort: true,
+    watch: {
+      ignored: ["**/*.mp4", "**/*.mkv", "**/*.avi", "**/*.mov"],
+    },
   },
 });

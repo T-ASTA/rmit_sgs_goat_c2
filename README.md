@@ -147,7 +147,7 @@ Our prototype demonstrates the end-to-end user journey across all three ecosyste
 * **Frontend:** React 19, Vite 6, Modern CSS Design System (DM Sans, Manrope, JetBrains Mono)
 * **Identity & Access Management:** `@tidecloak/react` (`^0.14.33`), `@tidecloak/js`
 * **Local Backend IAM:** TideCloak Dev Server (`tideorg/tidecloak-dev:latest` on Docker)
-* **Demo Video:** `Video.mp4` included in this repository.
+* **Official Demo Video:** `RMIT_SGS_GDU_GOAT_C2.mp4` (and `Video.mp4`) included directly in this repository.
 
 ---
 
@@ -223,7 +223,8 @@ Executes the comprehensive suite of 42 automated tests validating FIFO queue rec
 │   └── style.css                # Polished design system
 ├── tests/
 │   └── fairenrol.test.js        # 42 unit and adversarial integration tests
-├── Video.mp4                    # Complete walkthrough video of the working app
+├── RMIT_SGS_GDU_GOAT_C2.mp4     # Official walkthrough demo video of the working app
+├── Video.mp4                    # Complete walkthrough video backup
 ├── index.html                   # HTML entry point
 ├── package.json                 # Dependencies (@tidecloak/react, react 19, vite)
 └── README.md                    # Project documentation

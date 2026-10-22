@@ -14,6 +14,69 @@
 
 ---
 
+## 📐 TideCloak Protection Architecture (Tide's MCP Planning)
+
+> **Prompt Reference**: *"Build this app as though TideCloak protects it. Use Tide’s MCP to plan where TideCloak fits, and simulate TideCloak’s sign-in, roles and access checks for now."*
+
+### 1. Where TideCloak Fits in FairEnrol
+
+TideCloak protects FairEnrol across four architectural trust layers:
+
+```
+[ University Users: Student, Registrar, Approver Panel ]
+                          │
+                          ▼ (1. OIDC Authentication & Decentralized Identity)
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 🛡️ TideCloak Identity Layer (Decentralized Cybersecurity Fabric)        │
+│  - Realm: `fairenrol` | Client: `fairenrol-app` (Public Client + PKCE)  │
+│  - Ineffable threshold key shares: No master signing key to steal       │
+│  - Self-service user registration with default `student` role           │
+│  - JWT Bearer tokens issuing verified realm & client role claims        │
+└─────────────────────────────────────────────────────────────────────────┘
+                          │
+                          ▼ (2. Dynamic Role-Based Access Control - RBAC)
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 👤 FairEnrol Presentation Layer (React 19 + @tidecloak/react)           │
+│  - Maps token claims: `admin`, `registrar`, `approver`, `student`       │
+│  - Synchronizes active workspace views to verified credentials          │
+└─────────────────────────────────────────────────────────────────────────┘
+                          │
+                          ▼ (3. Quorum-Enforced Policy & Access Check Engine)
+┌─────────────────────────────────────────────────────────────────────────┐
+│ ⚖️ Decentralized Governance Engine                                      │
+│  - Access Check 1 (FIFO Integrity): Registrar cannot jump queues        │
+│  - Access Check 2 (Panel Integrity): Registrar cannot alter board alone │
+│  - Access Check 3 (Anti-Self-Dealing): Requesters cannot vote on self   │
+│  - Access Check 4 (Quorum Gate): Overrides require >= 2 of 3 approvals  │
+│  - Breach Interception: God-mode escalations are BLOCKED & logged       │
+└─────────────────────────────────────────────────────────────────────────┘
+                          │
+                          ▼ (4. Public Audit Ledger)
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 📜 Verifiable Public Audit Trail                                        │
+│  - Every state mutation, vote, and blocked attack is cryptographically  │
+│    recorded with actor name, timestamp, and public rationale            │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### 2. Implementation: Live TideCloak + High-Fidelity Simulation
+
+FairEnrol incorporates a **dual-layer implementation model**:
+1. **Live TideCloak Mode (Production / Active Container):**
+   * Uses `@tidecloak/react` (`TideCloakContextProvider`) connected to `http://localhost:8080/`.
+   * Standard OIDC Authorization Code Flow with PKCE (`/auth/redirect`).
+   * Token claims automatically govern user permissions (`admin`, `registrar`, `approver`, `student`).
+   * Self-service registration enabled (`New user? Register`).
+2. **High-Fidelity Simulation Mode (Interactive Demo & Judging):**
+   * The app features an interactive persona simulator demonstrating how TideCloak's access checks intercept privilege escalation:
+     * **Sign-in & Role Switching:** Switch seamlessly between Student (`Avery Chen`), Registrar (`Taylor Reed`), and Panel Approvers (`Dr. Amara Okafor`, `Sam Williams`, `Alex Morgan`).
+     * **Simulated Access Checks:**
+       * *Override Attempt:* Clicking *"Attempt both overrides"* triggers an immediate policy rejection with explicit reason logging.
+       * *Quorum Execution:* Exceptions remain in `pending` status until 2 independent panel members sign off.
+       * *Self-Dealing Guard:* If an approver requests an exception for their own department, their approval button is deactivated.
+
+---
+
 ### 1. Vision & Originality
 
 In higher education, high-demand elective courses, capstone units, and scholarship-tied seats regularly fill within seconds of registration opening. In traditional University Management Systems (UMS), course waitlists and seat caps are stored in centralized relational databases operated by a handful of system administrators or registrars.
